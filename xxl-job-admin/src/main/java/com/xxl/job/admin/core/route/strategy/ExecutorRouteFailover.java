@@ -8,17 +8,23 @@ import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.biz.model.TriggerParam;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by xuxueli on 17/3/10.
+ * 2022-10-11 原有逻辑是从列表中顺序取一个，改为随机取
  */
 public class ExecutorRouteFailover extends ExecutorRouter {
+
+    private static Random localRandom = new Random();
 
     @Override
     public ReturnT<String> route(TriggerParam triggerParam, List<String> addressList) {
 
         StringBuffer beatResultSB = new StringBuffer();
-        for (String address : addressList) {
+
+        while (addressList.size() > 0) {
+            String address = addressList.get(localRandom.nextInt(addressList.size()));
             // beat
             ReturnT<String> beatResult = null;
             try {
@@ -41,6 +47,9 @@ public class ExecutorRouteFailover extends ExecutorRouter {
                 beatResult.setContent(address);
                 return beatResult;
             }
+
+            // beat failed. removed from list
+            addressList.remove(address);
         }
         return new ReturnT<String>(ReturnT.FAIL_CODE, beatResultSB.toString());
 
