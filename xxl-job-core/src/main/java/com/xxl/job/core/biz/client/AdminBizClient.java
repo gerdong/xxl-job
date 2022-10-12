@@ -29,8 +29,7 @@ public class AdminBizClient implements AdminBiz {
 
     private String addressUrl ;
     private String accessToken;
-    private int timeout = 3;
-
+    private int timeout = 10;
 
     @Override
     public ReturnT<String> callback(List<HandleCallbackParam> callbackParamList) {

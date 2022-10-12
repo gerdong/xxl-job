@@ -12,7 +12,9 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -38,11 +40,13 @@ public class SampleXxlJob {
     public void demoJobHandler() throws Exception {
         XxlJobHelper.log("XXL-JOB, Hello World.");
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             XxlJobHelper.log("beat at:" + i);
-            TimeUnit.SECONDS.sleep(2);
+            TimeUnit.SECONDS.sleep(1);
         }
         // default success
+        System.out.printf("当前时间：%s%n", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        System.out.printf("subtask: %d,%d%n", XxlJobHelper.getShardIndex(), XxlJobHelper.getShardTotal());
     }
 
 
@@ -66,7 +70,9 @@ public class SampleXxlJob {
                 XxlJobHelper.log("第 {} 片, 忽略", i);
             }
         }
-
+        System.out.printf("当前时间: %s%n", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        System.out.printf("分片广播运行: %d,%d%n", shardIndex, shardTotal);
+        TimeUnit.SECONDS.sleep((int)(Math.random() * 30));
     }
 
 
