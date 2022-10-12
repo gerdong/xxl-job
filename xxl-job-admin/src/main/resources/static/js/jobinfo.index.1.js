@@ -88,7 +88,8 @@ $(function() {
 	                		return data?moment(new Date(data)).format("YYYY-MM-DD HH:mm:ss"):"";
 	                	}
 	                },
-	                { "data": 'author', "visible" : true, "width":'10%'},
+//	                { "data": 'author', "visible" : false, "width":'10%'},
+	                { "data": 'childJobId', "visible" : true, "width":'10%'},
 	                { "data": 'alarmEmail', "visible" : false},
 	                {
 	                	"data": 'triggerStatus',
@@ -397,7 +398,7 @@ $(function() {
 				maxlength: 50
 			},
 			author : {
-				required : true
+				required : false
 			}/*,
             executorTimeout : {
                 digits:true
